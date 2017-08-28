@@ -48,7 +48,7 @@ const config: webpack.Configuration = {
                 }
             },
             {
-                test: /\.(less|css)$/,
+                test: /\.(sass|scss|css)$/,
                 use: ExtractTextPlugin.extract({
                     fallback: 'style-loader',
                     use: [
@@ -56,7 +56,8 @@ const config: webpack.Configuration = {
                         {
                             loader: 'postcss-loader',
                             options: {
-                                importLoaders: 1,
+                                importLoaders: 3,
+                                sourceMap: true,
                                 plugins: (loader: any) => [
                                     require('postcss-import')({ root: loader.resourcePath }),
                                     require('autoprefixer'),
@@ -64,8 +65,8 @@ const config: webpack.Configuration = {
                                 ]
                             }
                         },
-                        'less-loader',
-                        'resolve-url-loader'
+                        'resolve-url-loader',
+                        'sass-loader?sourceMap',
                     ]
                 })
             }

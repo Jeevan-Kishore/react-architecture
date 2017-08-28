@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-grid.css';
 
 /*Import custom styles*/
-import './less/app.less';
+import './scss/app.scss';
 
 /*Import components*/
 import {RenderBodyElement} from "./components/body-element";
