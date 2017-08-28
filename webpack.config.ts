@@ -3,13 +3,15 @@ import * as path from 'path';
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWepackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const CompressionPlugin = require("compression-webpack-plugin");
 
 declare const __dirname: string;
 
 const config: webpack.Configuration = {
     entry: {
         vendor: ['react', 'react-dom', 'jquery', 'bootstrap'],
-        app: './app/app.ts'
+        app: './app/app.tsx'
     },
     output: {
         filename: 'js/[name].[hash].js',
@@ -32,7 +34,7 @@ const config: webpack.Configuration = {
                 ],
                 loader: 'babel-loader',
                 options: {
-                    presets: ['es2015']
+                    presets: ['es2015', 'react']
                 }
 
             },
@@ -109,7 +111,17 @@ const config: webpack.Configuration = {
 
         new ExtractTextPlugin({
             filename: 'css/style.[hash].min.css',
-        })
+        }),
+
+        //new BundleAnalyzerPlugin(),    //Uncomment to view analysis of the bundle.
+
+        /*new CompressionPlugin({        //Uncomment to enable gzip - might not be required for development
+            asset: "[path].gz[query]",
+            algorithm: "gzip",
+            test: /\.js$|\.css$|\.html$/,
+            threshold: 10240,
+            minRatio: 0
+        })*/
     ]
 };
 
