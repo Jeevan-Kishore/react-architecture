@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWepackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const CompressionPlugin = require("compression-webpack-plugin");
+const CompressionPlugin = require('compression-webpack-plugin');
 
 declare const __dirname: string;
 
@@ -74,8 +74,8 @@ const config: webpack.Configuration = {
     },
     target: 'web',
     externals: {
-        "react": "React",
-        "react-dom": "ReactDOM"
+        'react': 'React',
+        'react-dom': 'ReactDOM'
     },
     stats: {
         assets: true,
@@ -100,10 +100,7 @@ const config: webpack.Configuration = {
 
         new webpack.optimize.UglifyJsPlugin(), //minify everything
         new webpack.optimize.AggressiveMergingPlugin(),//Merge chunks
-
-        //TODO - Use compression plugin to compress, serve zipped files using a middleware
-        //https://github.com/webpack-contrib/compression-webpack-plugin
-
+        
         new CopyWepackPlugin([{
             'from' :'externals/react-15.6.1/*.js' ,
             'to' : '' //copy to root folder i.e, dist
@@ -126,8 +123,8 @@ const config: webpack.Configuration = {
         }),
 
         new CompressionPlugin({
-            asset: "[path].gz[query]",
-            algorithm: "gzip",
+            asset: '[path].gz[query]',
+            algorithm: 'gzip',
             test: /\.js$|\.css$|\.html$/,
             threshold: 10240,
             minRatio: 0

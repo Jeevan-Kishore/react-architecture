@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWepackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const CompressionPlugin = require("compression-webpack-plugin");
+const CompressionPlugin = require('compression-webpack-plugin');
 
 declare const __dirname: string;
 
@@ -120,13 +120,6 @@ const config: webpack.Configuration = {
 
         //new BundleAnalyzerPlugin(),    //Uncomment to view analysis of the bundle.
 
-        /*new CompressionPlugin({        //Uncomment to enable gzip - might not be required for development
-            asset: "[path].gz[query]",
-            algorithm: "gzip",
-            test: /\.js$|\.css$|\.html$/,
-            threshold: 10240,
-            minRatio: 0
-        })*/
     ]
 };
 
