@@ -131,6 +131,14 @@ const config: webpack.Configuration = {
             test: /\.js$|\.css$|\.html$/,
             threshold: 10240,
             minRatio: 0
+        }),
+
+        new webpack.optimize.ModuleConcatenationPlugin(),
+
+        new webpack.HashedModuleIdsPlugin({
+            hashFunction: 'sha256',
+            hashDigest: 'hex',
+            hashDigestLength: 20
         })
     ]
 };

@@ -114,6 +114,10 @@ const config: webpack.Configuration = {
             filename: 'css/style.[hash].min.css',
         }),
 
+        new webpack.optimize.ModuleConcatenationPlugin(),
+
+        new webpack.NamedModulesPlugin(),
+
         //new BundleAnalyzerPlugin(),    //Uncomment to view analysis of the bundle.
 
         /*new CompressionPlugin({        //Uncomment to enable gzip - might not be required for development
