@@ -1,12 +1,6 @@
-/*Testing scss styles*/
+/*Import bootstrap over-rides before actual bootstrap import*/
+@import './_custom.scss';
 
-.message {
-  border: 1px solid #ccc;
-  padding: 10px;
-  color: #333;
-}
+/*Importing Bootstrap styles*/
+@import "~bootstrap/scss/bootstrap.scss";
 
-.success {
-  @extend .message;
-  border-color: green;
-}

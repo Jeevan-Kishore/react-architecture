@@ -5,10 +5,6 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-/*Import bootstrap styles*/
-import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap/dist/css/bootstrap-grid.css';
-
 /*Import custom styles*/
 import './scss/app.scss';
 

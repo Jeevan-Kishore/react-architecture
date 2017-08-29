@@ -10,7 +10,7 @@ export class RenderBodyElement extends Component{
 
    render(){
        return (
-           <div className="message parent-div container-fluid">
+           <div className="parent-div container-fluid">
                <CodeNavBar />
                <h1>Hello world as usual!!</h1>
                <div>
