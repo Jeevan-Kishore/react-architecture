@@ -25,7 +25,9 @@
     "jquery": "^3.2.1",
     "popper.js": "^1.12.3",
     "react": "^15.6.1",
-    "react-dom": "^15.6.1"
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
   },
   "devDependencies": {
     "@types/bootstrap": "^3.3.36",
@@ -53,6 +55,7 @@
     "postcss-cssnext": "^3.0.2",
     "postcss-import": "^10.0.0",
     "postcss-loader": "^2.0.6",
+    "redux-devtools": "^3.4.0",
     "resolve-url-loader": "^2.1.0",
     "sass-loader": "^6.0.6",
     "source-map-loader": "^0.2.1",
