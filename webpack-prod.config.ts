@@ -10,7 +10,7 @@ declare const __dirname: string;
 
 const config: webpack.Configuration = {
     entry: {
-        vendor: ['jquery', 'bootstrap'],
+        vendor: ['jquery'],
         app: './app/app.tsx',
     },
     output: {

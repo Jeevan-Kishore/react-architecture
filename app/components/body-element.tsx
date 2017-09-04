@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import 'bootstrap/js/src/collapse.js'; //import collapse to enable navbar to collapse
+
 import {CodeNavBar} from './nav-bar/code-nav-bar';
 import {Component} from 'react';
 
