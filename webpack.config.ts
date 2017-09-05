@@ -115,7 +115,7 @@ const config: webpack.Configuration = {
 
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            filename: 'js/vendor-[hash].min.js'
+            filename: 'js/vendor.[hash].min.js'
         }),
 
         new ExtractTextPlugin({
