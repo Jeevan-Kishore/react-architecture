@@ -11,7 +11,7 @@ declare const __dirname: string;
 
 const config: webpack.Configuration = {
     entry: {
-        vendor: ['react', 'react-dom'],
+        vendor: ['react', 'react-dom', 'whatwg-fetch'],
         app: './app/app.tsx'
     },
     output: {
@@ -115,7 +115,7 @@ const config: webpack.Configuration = {
 
         new webpack.optimize.CommonsChunkPlugin({
             name: 'vendor',
-            filename: 'js/vendor-[hash].min.js'
+            filename: 'js/vendor.[hash].min.js'
         }),
 
         new ExtractTextPlugin({
