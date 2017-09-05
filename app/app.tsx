@@ -5,6 +5,9 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
+import 'bootstrap/js/src/util.js' // Component used by all bootstrap js files
+import 'bootstrap/js/src/collapse.js'; //import collapse to enable navbar to collapse
+
 /*Import custom styles*/
 import './scss/app.scss';
 

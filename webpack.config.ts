@@ -5,12 +5,13 @@ const CopyWepackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CompressionPlugin = require('compression-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 
 declare const __dirname: string;
 
 const config: webpack.Configuration = {
     entry: {
-        vendor: ['react', 'react-dom', 'jquery'],
+        vendor: ['react', 'react-dom'],
         app: './app/app.tsx'
     },
     output: {
@@ -25,7 +26,7 @@ const config: webpack.Configuration = {
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
+                test: /\.(jsx|js)?$/,
                 include: [
                     path.resolve(__dirname, 'app')
                 ],
@@ -34,12 +35,17 @@ const config: webpack.Configuration = {
                 ],
                 loader: 'babel-loader',
                 options: {
-                    presets: ['es2015', 'react']
+                    presets: ['es2015', 'react', 'stage-0']
                 }
 
             },
             { test: /\.tsx?$/, loader: 'awesome-typescript-loader' },
-            { enforce: 'pre', test: /\.js$/, loader: 'source-map-loader' },
+            {
+                enforce: 'pre',
+                test: /\.js$/,
+                loader: 'source-map-loader',
+                exclude: [path.join(process.cwd(), 'node_modules')]
+            },
             {
                 test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
                 loader: 'url-loader',
@@ -94,20 +100,22 @@ const config: webpack.Configuration = {
         new HtmlWebpackPlugin({
             template: './app/index.ejs'
         }),
+        new ScriptExtHtmlWebpackPlugin({
+            defaultAttribute: 'defer'
+        }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.ProvidePlugin({
-            '$': 'jquery',
-            'jQuery': 'jquery',
-            'window.jquery': 'jquery',
+            '$': 'jquery/dist/jquery.min.js',
+            'jQuery': 'jquery/dist/jquery.min.js',
+            'window.jquery': 'jquery/dist/jquery.min.js',
             'Popper' : 'popper.js',
             'window.Popper' : 'popper.js',
             'Popper.js' : 'popper.js'
         }),
 
         new webpack.optimize.CommonsChunkPlugin({
-            names: ['vendor'],
-            chunks: ['vendor-chunk'],
-            minChunks: 2
+            name: 'vendor',
+            filename: 'js/vendor-[hash].min.js'
         }),
 
         new ExtractTextPlugin({
