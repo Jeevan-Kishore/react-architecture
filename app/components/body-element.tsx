@@ -7,6 +7,14 @@ export class RenderBodyElement extends Component{
    constructor(props: any){
        super(props);
    }
+    componentDidMount () {
+        this.getData();
+    }
+    async getData () {
+        const rawData = await fetch('http://headers.jsontest.com/');
+        const data = await rawData.json();
+        console.log('data', data);
+    }
 
    render(){
        return (

@@ -30,7 +30,8 @@
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.6",
     "redux": "^3.7.2",
-    "uglify-es": "^3.0.28"
+    "uglify-es": "^3.0.28",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "@types/bootstrap": "^3.3.36",
