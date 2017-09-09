@@ -135,27 +135,47 @@ export class DiamondSweeperComponent extends Component{
 
     async showNearestDiamond(currentIndex: number){
         const closestIndex = this.getClosest(this.diamondsIndices, currentIndex);
-            if(!this.state.matrix[closestIndex].clicked){
-                const stateClone : MatrixInterface = $.extend(true,{}, this.state);
-                stateClone.matrix[closestIndex].showArrow = true;
-                await this.setState(stateClone);
+        if(!this.state.matrix[closestIndex].clicked){
+            const stateClone : MatrixInterface = $.extend(true,{}, this.state);
+            stateClone.matrix[closestIndex].showArrow = true;
+            await this.setState(stateClone);
+        }
+    }
+
+    generateCells(){
+        const cells = this.state.matrix.map((cell: MatrixCell, index: number) => {
+            return (
+                <div key={`cell-${index}`} className={`col col-sm matrix-cells`}>
+                    {cell.showArrow ? <div className="arrowTag">&nbsp;</div> : null}
+                    <button className={`btn btn-light clickable ${cell.displayData}`} onClick={ (e) => this.revealCell(e, index) }>&nbsp;</button>
+                </div>
+            )
+        });
+
+        for(let i = 1; i < cells.length; i++){ //Loop through array to insert break points after 8 elements
+            if(i % 9 === 0){
+                cells.splice(i-1, 0, this.generateBreakPoint(i));
             }
+        }
+
+        return (
+            <div className="row">
+                {cells}
+            </div>
+        )
+    }
+
+    generateBreakPoint(index: number){
+        return(
+            <div key={`break-${index}`} className="w-100"></div>
+        )
     }
 
 
     render(){
         return (
-            <div className="matrixWrapper col-12">
-                <div className="row">
-                    {this.state.matrix.map((cell, index) => {
-                        return (
-                            <div key={`cell-${index}`} className="col matrix-cells ">
-                                {cell.showArrow ? <div className="arrowTag">&nbsp;</div> : null}
-                                <button className={`btn btn-light clickable ${cell.displayData}`} onClick={ (e) => this.revealCell(e, index) }>&nbsp;</button>
-                            </div>
-                        )
-                    })}
-                </div>
+            <div className="matrixWrapper col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
+                {this.generateCells()}
             </div>
         );
     }
