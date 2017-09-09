@@ -1,7 +1,5 @@
 import * as React from 'react';
 import {Component} from 'react';
-import Event = JQuery.Event;
-import {URLFormatOptions} from "url";
 
 interface MatrixInterface{
     matrix: MatrixCell[]
@@ -56,7 +54,6 @@ export class DiamondSweeperComponent extends Component{
             questionMatrix[randomnIndex] = diamondCell;
             this.diamondsIndices.push(randomnIndex);
         }
-        console.log('Diamond indices', this.diamondsIndices);
         return questionMatrix;
     }
 
@@ -138,7 +135,6 @@ export class DiamondSweeperComponent extends Component{
 
     async showNearestDiamond(currentIndex: number){
         const closestIndex = this.getClosest(this.diamondsIndices, currentIndex);
-        console.log(currentIndex, closestIndex);
             if(!this.state.matrix[closestIndex].clicked){
                 const stateClone : MatrixInterface = $.extend(true,{}, this.state);
                 stateClone.matrix[closestIndex].showArrow = true;
