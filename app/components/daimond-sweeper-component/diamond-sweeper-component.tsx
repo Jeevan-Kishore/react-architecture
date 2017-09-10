@@ -1,5 +1,8 @@
 import * as React from 'react';
 import {Component} from 'react';
+import * as localforage from 'localforage';
+require('pnotify/src/pnotify.css'); //Import pnotify css for notification support
+const PNotify = require('pnotify/src/pnotify.desktop.js'); //Import pnotify js for notification support
 
 interface MatrixInterface{
     matrix: MatrixCell[],
@@ -60,7 +63,6 @@ export class DiamondSweeperComponent extends Component{
             questionMatrix[randomnIndex] = diamondCell;
             this.diamondsIndices.push(randomnIndex);
         }
-        console.log(this.diamondsIndices);
         return questionMatrix;
     }
 
@@ -92,8 +94,8 @@ export class DiamondSweeperComponent extends Component{
     }
 
     async revealCell(event: any, incomingIndex: number){
+        event.preventDefault();
         if(this.state.gameComplete) {
-            alert(`Game complete. Score : ${this.gameScore}`);
             return;
         }
         const currentState: MatrixInterface = $.extend(true,{}, this.state); //Deep copy state object, needed to setstate after computation
@@ -109,9 +111,6 @@ export class DiamondSweeperComponent extends Component{
             diamondFlag: false,
             showArrow: false
         };
-
-        event.preventDefault();
-
 
         await this.setState(currentState); //Setback the entire object
         if(currentState.matrix[incomingIndex].diamondFlag){
@@ -135,6 +134,7 @@ export class DiamondSweeperComponent extends Component{
                 !cell.clicked && this.gameScore++;
             });
             this.setState({gameComplete: true});
+            this.showNotification('Game Status', `Game complete : ${this.gameScore}`, 'success');
         }
     }
 
@@ -172,11 +172,7 @@ export class DiamondSweeperComponent extends Component{
             }
         }
 
-        return (
-            <div className="row">
-                {cells}
-            </div>
-        )
+        return cells;
     }
 
     generateBreakPoint(index: number){
@@ -187,27 +183,71 @@ export class DiamondSweeperComponent extends Component{
 
     showGameAlert(){
         return (
-            <div className="row justify-content-end alertBoxWrapper">
-                <div className="col-sm-6">
-                    <div className="alert alert-info alert-dismissible fade show" role="alert">
-                        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        Game complete. Score : {this.gameScore}
-                    </div>
+            <div className="col-sm-6 game-complete-notification">
+                <div className="alert alert-info alert-dismissible fade show" role="alert">
+                    Game complete. Score : {this.gameScore}
                 </div>
             </div>
         )
     }
 
+    renderSaveLoadGame(){
+        return (
+            <div className="col-sm-6 game-options-col">
+                <button type="button" className="btn btn-outline-primary clickable save-button" onClick={(e) => this.saveGame(e)}>Save Game</button>
+                <button type="button" className="btn btn-outline-secondary clickable load-button" onClick={(e) => this.loadGame(e)}>Load Game</button>
+            </div>
+        )
+    }
 
+    async saveGame(event: any){
+        event.preventDefault();
+        await localforage.setItem('diamondSweeperMatrix', this.state.matrix);
+        await localforage.setItem('diamondSweeperDiamondIndices', this.diamondsIndices);
+        this.showNotification('Game Notification', 'Game saved', 'success');
+    }
+
+    async loadGame(event: any){
+        event.preventDefault();
+        const savedState = await localforage.getItem('diamondSweeperMatrix');
+        const savedDiamondIndices = await localforage.getItem('diamondSweeperDiamondIndices').then((response: number[]) => response);
+        if (savedState && savedDiamondIndices){
+            await this.setState({matrix : savedState});
+            this.diamondsIndices = Array.from(savedDiamondIndices);
+            this.showNotification('Game Notification', 'Game loaded', 'success');
+        }else{
+            this.showNotification('Game Notification', 'No previous data to load', 'error');
+        }
+    }
+
+    showNotification(title:string, text: string, type: string){
+        PNotify.desktop.permission();
+        new PNotify({
+            title: title,
+            text: text,
+            styling: 'bootstrap3',
+            animate_speed: 'normal',
+            shadow: true,
+            hide: true,
+            delay: 2000,
+            type: type,
+            desktop: {
+                desktop: true
+            }
+        });
+    }
 
 
     render(){
         return (
             <div className="matrixWrapper col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
-                {this.state.gameComplete ? this.showGameAlert() : null}
-                {this.generateCells()}
+                <div className="row justify-content-between infoBoxWrapper">
+                    {!this.state.gameComplete ? this.renderSaveLoadGame() : null}
+                    {this.state.gameComplete ? this.showGameAlert() : null}
+                </div>
+                <div className="row">
+                    {this.generateCells()}
+                </div>
             </div>
         );
     }

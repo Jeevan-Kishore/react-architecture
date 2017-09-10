@@ -1,6 +1,23 @@
 .matrixWrapper{
-  .alertBoxWrapper{
+  .infoBoxWrapper{
     margin: 10px 0 5px 0;
+
+    .game-complete-notification{
+      padding: 0;
+      .alert{
+        margin: 0;
+      }
+    }
+
+    .game-options-col{
+      padding: 0;
+
+      .save-button{
+        margin-right: 20px;
+      }
+
+    }
+
   }
 }
 

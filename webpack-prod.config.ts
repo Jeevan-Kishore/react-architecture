@@ -11,7 +11,7 @@ declare const __dirname: string;
 
 const config: webpack.Configuration = {
     entry: {
-        vendor: ['react', 'react-dom', 'whatwg-fetch'],
+        vendor: ['react', 'react-dom', 'whatwg-fetch', 'pnotify', 'localforage'],
         app: './app/app.tsx',
     },
     output: {
@@ -99,9 +99,9 @@ const config: webpack.Configuration = {
         }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.ProvidePlugin({
-            '$': 'jquery/dist/jquery.min.js',
-            'jQuery': 'jquery/dist/jquery.min.js',
-            'window.jquery': 'jquery/dist/jquery.min.js',
+            '$': 'jquery',
+            'jQuery': 'jquery',
+            'window.jquery': 'jquery',
             'Popper' : 'popper.js',
             'window.Popper' : 'popper.js',
             'Popper.js' : 'popper.js'
