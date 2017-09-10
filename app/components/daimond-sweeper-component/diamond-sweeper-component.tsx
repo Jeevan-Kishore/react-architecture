@@ -2,7 +2,8 @@ import * as React from 'react';
 import {Component} from 'react';
 
 interface MatrixInterface{
-    matrix: MatrixCell[]
+    matrix: MatrixCell[],
+    gameComplete: boolean
 }
 
 interface MatrixCell{
@@ -15,13 +16,17 @@ interface MatrixCell{
 export class DiamondSweeperComponent extends Component{
     state:MatrixInterface;
     NUMBER_OF_DIAMONDS:number = 8;
+    COLUMN_COUNT:number = 8;
+    ROW_COUNT:number = 8;
     diamondsFound:number = 0;
     diamondsIndices: number[] = [];
+    gameScore: number = 0;
 
     constructor(props: any){
         super(props);
         this.state = {
-            matrix : []
+            matrix : [],
+            gameComplete: false
         }
     }
     componentDidMount () {
@@ -30,7 +35,8 @@ export class DiamondSweeperComponent extends Component{
 
     getInitialState () {
         const matrixInitState: MatrixInterface =  {
-            matrix:  []
+            matrix:  [],
+            gameComplete: false
         };
         return matrixInitState;
     }
@@ -41,7 +47,7 @@ export class DiamondSweeperComponent extends Component{
     }
 
     async replaceQuestionWithDiamonds(){
-        const questionMatrix = await this.getQuestionableMatrix(8,8);
+        const questionMatrix = await this.getQuestionableMatrix(this.ROW_COUNT,this.COLUMN_COUNT);
         const diamondCell:MatrixCell = {
             displayData: 'questionMarkTag',
             clicked: false,
@@ -54,6 +60,7 @@ export class DiamondSweeperComponent extends Component{
             questionMatrix[randomnIndex] = diamondCell;
             this.diamondsIndices.push(randomnIndex);
         }
+        console.log(this.diamondsIndices);
         return questionMatrix;
     }
 
@@ -85,6 +92,10 @@ export class DiamondSweeperComponent extends Component{
     }
 
     async revealCell(event: any, incomingIndex: number){
+        if(this.state.gameComplete) {
+            alert(`Game complete. Score : ${this.gameScore}`);
+            return;
+        }
         const currentState: MatrixInterface = $.extend(true,{}, this.state); //Deep copy state object, needed to setstate after computation
         const diamondCellState: MatrixCell = {
             displayData: 'diamondMarkTag',
@@ -114,14 +125,17 @@ export class DiamondSweeperComponent extends Component{
             await this.clearPreviousArrow();
             await this.showNearestDiamond(incomingIndex);
         }
-        if(this.diamondsFound === this.NUMBER_OF_DIAMONDS){
-            let gameScore = 0;
-            this.state.matrix.forEach((cell) => {
-                !cell.clicked && gameScore++;
-            });
-            alert(`Game complete - Score : ${gameScore}`);
-        }
+        this.checkWinCriteria();
 
+    }
+
+    checkWinCriteria(){
+        if(this.diamondsFound === this.NUMBER_OF_DIAMONDS){
+            this.state.matrix.forEach((cell) => {
+                !cell.clicked && this.gameScore++;
+            });
+            this.setState({gameComplete: true});
+        }
     }
 
     async clearPreviousArrow(){
@@ -152,8 +166,8 @@ export class DiamondSweeperComponent extends Component{
             )
         });
 
-        for(let i = 1; i < cells.length; i++){ //Loop through array to insert break points after 8 elements
-            if(i % 9 === 0){
+        for(let i = 1; i < cells.length; i++){ //Loop through array to insert break points after specified number of column elements
+            if(i % (this.COLUMN_COUNT + 1) === 0){
                 cells.splice(i-1, 0, this.generateBreakPoint(i));
             }
         }
@@ -171,10 +185,28 @@ export class DiamondSweeperComponent extends Component{
         )
     }
 
+    showGameAlert(){
+        return (
+            <div className="row justify-content-end alertBoxWrapper">
+                <div className="col-sm-6">
+                    <div className="alert alert-info alert-dismissible fade show" role="alert">
+                        <button type="button" className="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        Game complete. Score : {this.gameScore}
+                    </div>
+                </div>
+            </div>
+        )
+    }
+
+
+
 
     render(){
         return (
             <div className="matrixWrapper col-12 col-sm-12 col-md-10 col-lg-10 col-xl-10">
+                {this.state.gameComplete ? this.showGameAlert() : null}
                 {this.generateCells()}
             </div>
         );
