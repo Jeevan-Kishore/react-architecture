@@ -11,7 +11,7 @@ declare const __dirname: string;
 
 const config: webpack.Configuration = {
     entry: {
-        vendor: ['react', 'react-dom', 'whatwg-fetch', 'localforage'],
+        vendor: ['react', 'react-dom', 'whatwg-fetch', 'es6-promise', 'localforage'],
         app: './app/app.tsx',
     },
     output: {
@@ -21,7 +21,10 @@ const config: webpack.Configuration = {
         libraryTarget: 'umd'
     },
     resolve: {
-        extensions: ['.ts', '.tsx', '.jsx', '.js']
+        extensions: ['.ts', '.tsx', '.jsx', '.js'],
+        alias: {
+            jquery: 'jquery/dist/jquery.min.js'
+        }
     },
     module: {
         rules: [
@@ -99,9 +102,9 @@ const config: webpack.Configuration = {
         }),
         new webpack.HotModuleReplacementPlugin(),
         new webpack.ProvidePlugin({
-            '$': 'jquery',
-            'jQuery': 'jquery',
-            'window.jquery': 'jquery',
+            '$': 'jquery/dist/jquery.min.js',
+            'jQuery': 'jquery/dist/jquery.min.js',
+            'window.jquery': 'jquery/dist/jquery.min.js',
             'Popper' : 'popper.js',
             'window.Popper' : 'popper.js',
             'Popper.js' : 'popper.js'

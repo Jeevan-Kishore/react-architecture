@@ -15,6 +15,6 @@ import './scss/main.scss';
 /*Import components*/
 import {RenderBodyElement} from "./components/body-element";
 
-declare const $:any;
+import * as $ from 'jquery';
 
 ReactDOM.render(<RenderBodyElement />, document.getElementById('root'));
