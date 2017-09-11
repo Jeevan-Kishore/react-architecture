@@ -11,7 +11,7 @@ declare const __dirname: string;
 
 const config: webpack.Configuration = {
     entry: {
-        vendor: ['react', 'react-dom', 'whatwg-fetch', 'pnotify', 'localforage'],
+        vendor: ['react', 'react-dom', 'whatwg-fetch', 'localforage'],
         app: './app/app.tsx'
     },
     output: {
