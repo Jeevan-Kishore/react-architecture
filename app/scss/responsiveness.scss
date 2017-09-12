@@ -1,0 +1,31 @@
+/* Breakpoint for extra-small viewport */
+@include media-breakpoint-up(xs) {
+  .matrix-cells {
+    margin: 1px;
+    padding: 4px;
+  }
+}
+/* Breakpoint for small viewport */
+@include media-breakpoint-up(sm) {
+  .matrix-cells {
+    margin: 5px 1px 5px 1px;
+  }
+}
+/* Breakpoint for medium viewport */
+@include media-breakpoint-up(md) {
+  .matrix-cells {
+    margin: 10px;
+  }
+}
+/* Breakpoint for large viewport */
+@include media-breakpoint-up(lg) {
+  .matrix-cells {
+    margin: 10px;
+  }
+}
+/* Breakpoint for extra-large viewport */
+@include media-breakpoint-up(xl) {
+  .matrix-cells {
+    margin: 10px;
+  }
+}
