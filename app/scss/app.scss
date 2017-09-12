@@ -1,8 +1,58 @@
-/*Import bootstrap over-rides before actual bootstrap import*/
-@import './_custom.scss';
+.matrixWrapper{
+  .infoBoxWrapper{
+    margin: 10px 0 5px 0;
 
-/*Importing Bootstrap styles*/
-@import '~bootstrap/scss/bootstrap.scss';
+    .game-complete-notification{
+      padding: 0;
+      .alert{
+        margin: 0;
+      }
+    }
 
-@import 'utils.scss';
+    .game-options-col{
+      padding: 0;
+
+      .save-button{
+        margin-right: 20px;
+      }
+
+    }
+
+  }
+}
+
+
+.matrix-cells{
+  margin: 10px;
+
+  button{
+    height: 100%;
+    min-width: 40px;
+    background-size: 40px 40px;
+    background-repeat: no-repeat;
+  }
+}
+
+
+.questionMarkTag{
+  background-image: url(../images/question.png);
+}
+
+.diamondMarkTag{
+  background-image: url(../images/diamond.png);
+}
+
+.arrowTag{
+  width: 20px;
+  background-size: 20px 20px;
+  background-repeat: no-repeat;
+  height: 20px;
+  background-image: url(../images/arrow.png);
+  position: absolute;
+  top: 30%;
+  left: -25%;
+  z-index: 1;
+}
+
+
 
