@@ -1,5 +1,4 @@
 import * as React from 'react';
-import {Component} from 'react';
 import * as localforage from 'localforage';
 require('pnotify/src/pnotify.css'); //Import pnotify css for notification support
 const PNotify = require('pnotify/src/pnotify.desktop.js'); //Import pnotify js for notification support
@@ -16,7 +15,7 @@ interface MatrixCell{
     showArrow: boolean
 }
 
-export class DiamondSweeperComponent extends Component{
+export class DiamondSweeperComponent extends React.Component{
     state:MatrixInterface;
     NUMBER_OF_DIAMONDS:number = 8;
     COLUMN_COUNT:number = 8;

@@ -1,6 +1,6 @@
 /*Import react framework*/
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import {render} from 'react-dom';
 
 import 'es6-promise';
 import 'whatwg-fetch';
@@ -15,6 +15,11 @@ import './scss/main.scss';
 /*Import components*/
 import {RenderBodyElement} from "./components/body-element";
 
-import * as $ from 'jquery';
+import {BrowserRouter} from 'react-router-dom';
 
-ReactDOM.render(<RenderBodyElement />, document.getElementById('root'));
+
+
+render(<BrowserRouter>
+    <RenderBodyElement />
+</BrowserRouter>,
+    document.getElementById('root'));

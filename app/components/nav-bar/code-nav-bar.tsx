@@ -1,7 +1,22 @@
 import * as React from 'react';
-import {Component} from 'react';
+import {Link} from 'react-router-dom';
 
-export class CodeNavBar extends Component{
+interface NavbarState {
+    activeLink: string
+}
+
+export class CodeNavBar extends React.Component{
+
+    state: NavbarState;
+
+    constructor(props: any){
+        super(props);
+        this.state = {
+            activeLink : 'home'
+        }
+    }
+
+
     render(){
         return (
             <nav className="navbar navbar-expand-lg navbar-light bg-light row">
@@ -12,8 +27,11 @@ export class CodeNavBar extends Component{
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
-                            <a className="nav-link clickable" >Diamond Sweeper <span className="sr-only">(current)</span></a>
+                        <li className={`nav-item ${this.state.activeLink === 'home' ? 'active' : ''}`}>
+                            <Link className="nav-link clickable" onClick={() => this.setState({activeLink : 'home'}) } to='/'>Home</Link>
+                        </li>
+                        <li className={`nav-item ${this.state.activeLink === 'diamond' ? 'active' : ''}`}>
+                            <Link className="nav-link clickable" onClick={() => this.setState({activeLink : 'diamond'}) } to='/diamond-sweeper'>Diamond Sweeper</Link>
                         </li>
                     </ul>
                 </div>
